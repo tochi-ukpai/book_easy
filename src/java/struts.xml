@@ -1,0 +1,34 @@
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <include file="struts-default.xml"/>
+    <!-- Configuration for the default package. -->
+    <package name="YSG" extends="struts-default">
+        <action name='register' method ='registerUser' class='com.ysg.action.YsgUserAction'>
+            <result type = "redirect">dashBoard.jsp</result>
+        </action>
+        <action name='login' method='signInUser' class='com.ysg.action.YsgUserAction'>
+            <result type= 'redirect'>dashBoard.jsp</result>
+            <result name="error">signin.jsp</result>
+            <result name="login" type = 'redirect'>adminDashboard.jsp</result>
+        </action>
+        
+        <action name = 'skd' method = 'doPost' class ='com.ysg.action.skd'>
+            <result type = 'redirect'>dashBoard.action</result>
+        </action>
+        
+        <action name = 'logout' method = 'logOut' class = 'com.ysg.action.YsgUserAction'>
+            <result type = 'redirect'>signin.jsp</result>
+        </action>
+        
+        <action name = 'viewseats' method = "viewSeats" class = 'com.ysg.action.YsgAdminAction'>
+            <result type = 'redirect'>seatsAdmin.jsp</result>
+        </action>
+        
+        <action name = 'viewbuses' method = "viewBuses" class = 'com.ysg.action.YsgAdminAction'>
+            <result type = 'redirect'>busesAdmin.jsp</result>
+        </action>
+    </package>
+</struts>
