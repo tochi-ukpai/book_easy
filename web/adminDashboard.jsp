@@ -15,20 +15,23 @@
         <title>Admin Dashboard</title>
     </head>
     <body>
-        <s:if test="#attr.account != null">
+        <s:if test="#attr.account != null && #attr.account.getEmail() == \"admin@YSG.com\"">
             <h1>Welcome to The Admin Dashboard</h1>
-        </s:if>
-        <form action="logout">
-            <input type="submit" value="Logout"/>
-        </form>
-        <s:if test="#attr.account == null">
-            <c:redirect url="signin.jsp"/>
-        </s:if>
+            <form action="logout">
+                <input type="submit" value="Logout"/>
+            </form>
+
             <form action ="viewbuses" method="post">
                 <input type="submit" value="View Buses"/>
             </form>
             <form action="viewseats" method="post">
                 <input type="submit" value="View Seats"/>
             </form>
+            <a href="./addBus.jsp"><input type ="submit" value="Add New Bus"/></a>
+        </s:if>
+        <s:if test="#attr.account == null">
+            <c:redirect url="signin.jsp"/>
+        </s:if>
+        
     </body>
 </html>

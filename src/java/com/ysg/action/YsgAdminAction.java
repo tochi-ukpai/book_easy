@@ -9,6 +9,8 @@ import com.opensymphony.xwork2.Action;
 import com.ysg.data.Account;
 import com.ysg.data.Bus;
 import com.ysg.data.Seat;
+import com.ysg.util.MySqlConnector;
+import static java.lang.Integer.parseInt;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,11 +41,17 @@ public class YsgAdminAction implements YsgAdminActionInt {
 
     @Override
     public String addSeat() throws Exception {
+        
         return Action.SUCCESS;
     }
 
+    
     @Override
     public String addBus() throws Exception {
+        String route = request.getParameter("route");
+        String type = request.getParameter("type");
+        int capacity = parseInt(request.getParameter("capacity"));
+        MySqlConnector.insertBus(route, type, capacity);
         return Action.SUCCESS;
     }
 

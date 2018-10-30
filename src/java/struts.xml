@@ -15,10 +15,6 @@
             <result name="login" type = 'redirect'>adminDashboard.jsp</result>
         </action>
         
-        <action name = 'skd' method = 'doPost' class ='com.ysg.action.skd'>
-            <result type = 'redirect'>dashBoard.action</result>
-        </action>
-        
         <action name = 'logout' method = 'logOut' class = 'com.ysg.action.YsgUserAction'>
             <result type = 'redirect'>signin.jsp</result>
         </action>
@@ -29,6 +25,9 @@
         
         <action name = 'viewbuses' method = "viewBuses" class = 'com.ysg.action.YsgAdminAction'>
             <result type = 'redirect'>busesAdmin.jsp</result>
+        </action>
+        <action name = 'addbus' method = "addBus" class = 'com.ysg.action.YsgAdminAction'>
+            <result type = 'redirect'>addBus.jsp</result>
         </action>
     </package>
 </struts>
