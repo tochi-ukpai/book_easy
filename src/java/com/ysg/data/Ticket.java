@@ -10,9 +10,17 @@ package com.ysg.data;
  * @author tochukwu
  */
 public class Ticket {
-    private String firstName, lastName, route;
+    private String firstName, lastName, phoneNumber;
     private Seat ticketSeat;
     private Boolean options;
+    
+    public Ticket(String firstN, String lastN, String number, Seat seat, Boolean opt){
+        firstName = firstN;
+        lastName = lastN;
+        phoneNumber = number;
+        ticketSeat = seat;
+        options = opt;
+    }
     
     public void setName(String firstN, String lastN){
         firstName = firstN;
@@ -37,5 +45,9 @@ public class Ticket {
     
     public Boolean getOptions(){
         return options;
+    }
+    
+    public String getNumber(){
+        return phoneNumber;
     }
 }

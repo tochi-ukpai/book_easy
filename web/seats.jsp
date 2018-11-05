@@ -1,6 +1,6 @@
 <%-- 
-    Document   : seatsAdmin
-    Created on : Oct 30, 2018, 8:58:26 PM
+    Document   : seats
+    Created on : Nov 1, 2018, 9:36:47 PM
     Author     : tochukwu
 --%>
 
@@ -9,15 +9,26 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
+
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Bus Seats</title>
+        <title>Available Seats</title>
     </head>
     <body>
-        <a href="adminDashboard.jsp"><button>Dashboard</button></a>
-        <table width = "100%">
+        <s:if test="#attr.seats == null">
+            <c:redirect url="viewseats.action"></c:redirect>
+        </s:if>
+        <s:if test="#attr.account != null">
+            <a href="dashBoard.jsp"><button>Dashboard</button></a>
+        </s:if>
+        <s:if test="#attr.account == null">
+            <a href="signin.jsp"><button>Sign In</button></a>
+            <a href="signup.jsp"><button>Register</button></a>
+        </s:if>
+        <a href="shoppingCart.jsp"><button>View Cart</button></a>
+        <table width ="100%">
             <tr>
                 <td>Seat Number</td>
                 <td>Bus Number</td>
@@ -35,6 +46,8 @@
                     <td><s:property value="getPrice()"/></td>
                     <td>
                         <form action="addToCart">
+                            <input type="hidden" value="<s:property value="getSeatNumber()"/>" name="seatID"/>
+                            <input type="hidden" value="<s:property value="getBus().getID()"/>" name="busID"/>
                             <input type="submit" value="Add to cart"/>
                         </form>
                     </td>

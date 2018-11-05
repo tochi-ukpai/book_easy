@@ -1,6 +1,6 @@
 <%-- 
-    Document   : busesAdmin
-    Created on : Oct 30, 2018, 9:00:03 PM
+    Document   : buses
+    Created on : Nov 1, 2018, 3:49:10 PM
     Author     : tochukwu
 --%>
 
@@ -16,7 +16,7 @@
         <title>Company Buses</title>
     </head>
     <body>
-        <a href="adminDashboard.jsp"><button>Dashboard</button></a>
+        <a href="dashBoard.jsp"><button>Dashboard</button></a>
         <table width = "100%">
             <tr>
                 <td>Bus ID</td>

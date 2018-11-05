@@ -31,6 +31,7 @@ public class YsgAdminAction implements YsgAdminActionInt {
     
     @Override
     public String viewBuses() throws Exception {
+        
         return Action.SUCCESS;
     }
 
@@ -51,13 +52,22 @@ public class YsgAdminAction implements YsgAdminActionInt {
         String route = request.getParameter("route");
         String type = request.getParameter("type");
         int capacity = parseInt(request.getParameter("capacity"));
-        MySqlConnector.insertBus(route, type, capacity);
+        int price = parseInt(request.getParameter("price"));
+        MySqlConnector.insertBus(route, type, capacity, capacity);
+        this.busList = MySqlConnector.fetchBuses();
+        Bus newbus = busList.get(busList.size()-1);
+        for (int i = 1, max = newbus.getCapacity(); i<= max;i++){
+            MySqlConnector.insertSeat(i, newbus.getID(), price, true);
+        }
+        seatList = MySqlConnector.fetchSeats();
+        request.getSession(true).setAttribute("seats", seatList);
+        request.getSession(true).setAttribute("buses", busList);
         return Action.SUCCESS;
     }
 
     @Override
     public void addParam(String string, String string1) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       params.putIfAbsent(string, string1);
     }
 
     @Override
