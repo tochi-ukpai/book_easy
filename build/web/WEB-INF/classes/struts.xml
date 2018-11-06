@@ -15,20 +15,29 @@
             <result name="login" type = 'redirect'>adminDashboard.jsp</result>
         </action>
         
-        <action name = 'skd' method = 'doPost' class ='com.ysg.action.skd'>
-            <result type = 'redirect'>dashBoard.action</result>
-        </action>
-        
         <action name = 'logout' method = 'logOut' class = 'com.ysg.action.YsgUserAction'>
             <result type = 'redirect'>signin.jsp</result>
         </action>
         
-        <action name = 'viewseats' method = "viewSeats" class = 'com.ysg.action.YsgAdminAction'>
-            <result type = 'redirect'>seatsAdmin.jsp</result>
+        <action name = 'viewseats' method = "viewSeats" class = 'com.ysg.action.YsgUserAction'>
+            <result type = 'redirect'>seats.jsp</result>
         </action>
         
         <action name = 'viewbuses' method = "viewBuses" class = 'com.ysg.action.YsgAdminAction'>
             <result type = 'redirect'>busesAdmin.jsp</result>
         </action>
+        <action name = 'addbus' method = "addBus" class = 'com.ysg.action.YsgAdminAction'>
+            <result type = 'redirect'>busesAdmin.jsp</result>
+        </action>
+        <action name = 'addToCart' method = "addToCart" class = 'com.ysg.action.YsgUserAction'>
+            <result type = 'redirect'>seats.jsp</result>
+        </action>
+        <action name = 'removeFromCart' method = "removeFromCart" class = 'com.ysg.action.YsgUserAction'>
+            <result type = 'redirect'>shoppingCart.jsp</result>
+        </action>
+        <action name = 'addTickets' method="addTickets" class='com.ysg.action.YsgUserAction'>
+            <result type='redirect'>payment.jsp</result>
+        </action>
+        
     </package>
 </struts>

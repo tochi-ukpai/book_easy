@@ -10,8 +10,16 @@ package com.ysg.data;
  * @author tochukwu
  */
 public class Bus {
-    private String route, departureTime, type;
-    private int capacity;
+    private String route, type;
+    private int capacity, busId, availableSeats;
+
+    public Bus(int id, String rout, String kind, int cap, int seats) {
+        route = rout;
+        type = kind;
+        capacity = cap;
+        busId = id;
+        availableSeats = seats;        
+    }
     
     public void setCapacity(int total){
         capacity = total;
@@ -25,9 +33,9 @@ public class Bus {
         type = ty;
     }
     
-    public void setDepartureTime(String departure){
-        departureTime = departure;
-    }
+//    public void setDepartureTime(String departure){
+//        departureTime = departure;
+//    }
     
     public int getCapacity(){
         return capacity;
@@ -41,7 +49,15 @@ public class Bus {
         return type;
     }
     
-    public String getDepartureTime(){
-        return departureTime;
+    public int getID(){
+        return busId;
     }
+    
+    public int getAvailable(){
+        return availableSeats;
+    }
+    
+//    public String getDepartureTime(){
+//        return departureTime;
+//    }
 }

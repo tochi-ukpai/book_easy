@@ -25,6 +25,6 @@
             <input type="password" name="pass" placeholder="Enter Password"/><br/>
             <input type="submit" value="Login"/>
         </form>
-        <a href="signup.jsp"><input type="button" value="Register"/></a>
+        <a href="signup.jsp"><button>Register</button></a>
     
 </html>

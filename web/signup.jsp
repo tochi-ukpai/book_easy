@@ -28,6 +28,6 @@
             <input type="password" placeholder="Re-enter password"/><br/>
             <input type="submit" value = "Register"/>
         </form>
-        <a href="signin.jsp"><input type="button" value="Login"/></a>
+        <a href="signin.jsp"><button>Login</button></a>
     </body>
 </html>

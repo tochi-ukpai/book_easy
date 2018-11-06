@@ -10,17 +10,24 @@ package com.ysg.data;
  * @author tochukwu
  */
 public class Seat {
-    private int number;
+    private int seatNumber;
     private Bus bus;
     private double price;
     private Boolean availability;
     
-    public void setNumber(int num){
-        number = num;
+    public Seat(int num, Bus car, double p, Boolean avail){
+        seatNumber = num;
+        bus = car;
+        price = p;
+        availability = avail;
     }
     
-    public int getNumber(){
-        return number;
+    public void setSeatNumber(int num){
+        seatNumber = num;
+    }
+    
+    public int getSeatNumber(){
+        return seatNumber;
     }
     
     public void setBus(Bus car){

@@ -13,22 +13,26 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Admin Dashboard</title>
+        <link rel="stylesheet" type = "text/css" href = "style.css"></link>
     </head>
     <body>
-        <s:if test="#attr.account != null">
+        <s:if test="#attr.account != null && #attr.account.getEmail().equalsIgnoreCase(\"admin@YSG.com\")">
             <h1>Welcome to The Admin Dashboard</h1>
+            <form action="logout" class="right">
+                <input type="submit" value="Logout"/>
+            </form>
+
+            <form action ="viewbuses" class="right">
+                <input type="submit" value="View Buses"/>
+            </form>
+            <form action="viewseats" class="right">
+                <input type="submit" value="View Seats"/>
+            </form>
+            <a href="./addBus.jsp"><button class="right">Add New Bus</button></a>
         </s:if>
-        <form action="logout">
-            <input type="submit" value="Logout"/>
-        </form>
         <s:if test="#attr.account == null">
             <c:redirect url="signin.jsp"/>
         </s:if>
-            <form action ="viewbuses" method="post">
-                <input type="submit" value="View Buses"/>
-            </form>
-            <form action="viewseats" method="post">
-                <input type="submit" value="View Seats"/>
-            </form>
+        
     </body>
 </html>
