@@ -12,12 +12,13 @@ import java.io.Serializable;
  * @author tochukwu
  */
 public class Account implements Serializable {
-    private String firstName, lastName, emailAddress, password, phoneNumber;
+    private String firstName, lastName, emailAddress, password, phoneNumber, username;
 
     public Account(){
         
     }
-    public Account(String firstN, String lastN, String email, String pass, String phone){
+    public Account(String userN, String firstN, String lastN, String email, String pass, String phone){
+        username = userN;
         firstName = firstN;
         lastName = lastN;
         emailAddress = email;
@@ -63,5 +64,13 @@ public class Account implements Serializable {
     
     public void setPassword(String pass){
         password = pass;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+    
+    public void setUsername(String userN){
+        username = userN;
     }
 }

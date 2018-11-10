@@ -24,8 +24,8 @@
             <input type="text" placeholder="last Name" name="lastN"/><br/>
             <input type="text" placeholder="Phone Number" name="phone"/><br/>
             <input type="email" placeholder="Email Address" name="email"/><br/>
+            <input type="text" placeholder="Username" name="username"/><br/>
             <input type="password" placeholder="Password" name="pass"/><br/>
-            <input type="password" placeholder="Re-enter password"/><br/>
             <input type="submit" value = "Register"/>
         </form>
         <a href="signin.jsp"><button>Login</button></a>

@@ -6,6 +6,12 @@
     <include file="struts-default.xml"/>
     <!-- Configuration for the default package. -->
     <package name="YSG" extends="struts-default">
+        <action name='admin'>
+            <result type='redirect'>adminLogin.jsp</result>
+        </action>
+        <action name='adminLogin' method = 'login' class='com.ysg.action.YsgAdminAction'>
+            <result type='redirect'>adminDashboard.jsp</result>
+        </action>
         <action name='register' method ='registerUser' class='com.ysg.action.YsgUserAction'>
             <result type = "redirect">dashBoard.jsp</result>
         </action>
@@ -17,8 +23,8 @@
         
         <action name = 'logout' method = 'logOut' class = 'com.ysg.action.YsgUserAction'>
             <result type = 'redirect'>signin.jsp</result>
-        </action>
-        
+            <result type = 'redirect' name = 'error'>signin.jsp</result>
+        </action>     
         <action name = 'viewseats' method = "viewSeats" class = 'com.ysg.action.YsgUserAction'>
             <result type = 'redirect'>seats.jsp</result>
         </action>

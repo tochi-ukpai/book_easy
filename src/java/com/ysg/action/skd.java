@@ -54,7 +54,7 @@ public class skd extends HttpServlet {
         } catch (Exception ex) {
             Logger.getLogger(skd.class.getName()).log(Level.SEVERE, null, ex);
         }
-       user = new Account(firstN, lastN, email, password, phone);
+//       user = new Account(firstN, lastN, email, password, phone);
 //       return Action.SUCCESS;
       }
     
