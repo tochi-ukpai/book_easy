@@ -21,7 +21,10 @@
             <c:redirect url="viewseats.action"></c:redirect>
         </s:if>
         <s:if test="#attr.account != null">
-            <a href="dashBoard.jsp"><button>Dashboard</button></a>
+            <a href="<s:if test="#attr.account.equalsIgnoreCase(\"admin\")">adminDashboard.jsp
+               </s:if><s:else>dashBoard.jsp</s:else>">
+                <button>Dashboard</button>
+            </a>
         </s:if>
         <s:if test="#attr.account == null">
             <a href="signin.jsp"><button>Sign In</button></a>
@@ -46,8 +49,8 @@
                     <td><s:property value="getPrice()"/></td>
                     <td>
                         <form action="addToCart">
-                            <input type="hidden" value="<s:property value="getSeatNumber()"/>" name="seatID"/>
-                            <input type="hidden" value="<s:property value="getBus().getID()"/>" name="busID"/>
+                            <input type="hidden" value="<s:property value="getSeatNumber()"/>" name="seat_id"/>
+                            <input type="hidden" value="<s:property value="getBus().getID()"/>" name="bus_id"/>
                             <input type="submit" value="Add to cart"/>
                         </form>
                     </td>

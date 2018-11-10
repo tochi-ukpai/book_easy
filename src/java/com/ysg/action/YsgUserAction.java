@@ -46,11 +46,11 @@ public class YsgUserAction implements YsgUserActionInt {
     @Override
     public String registerUser() throws Exception{
 //       System.out.println(request.getSession(true).getAttribute("firstN"));
+       String username = request.getParameter("username");
        String firstN = request.getParameter("firstN");
        String lastN = request.getParameter("lastN");
        String email = request.getParameter("email");
        String phone = request.getParameter("phone");
-        System.out.println(phone);
        String password  = Encryption.generateHashedPassword(request.getParameter("pass"));
        List<String> emails = MySqlConnector.getEmails();
        for (String emailA : emails){
@@ -58,9 +58,9 @@ public class YsgUserAction implements YsgUserActionInt {
                return Action.ERROR;
            }
        }
-       this.user = new Account(firstN, lastN, email, password, phone);
+       this.user = new Account(username, firstN, lastN, email, password, phone);
        System.out.println(user.getPassword());
-       MySqlConnector.insertUser(user.getFirstName(), user.getLastName(), user.getEmail(), user.getPhone(), user.getPassword());
+       MySqlConnector.insertUser(user.getUsername(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getPhone(), user.getPassword());
        request.getSession(true).setAttribute("account", user);
        return Action.SUCCESS;
     }
@@ -85,11 +85,8 @@ public class YsgUserAction implements YsgUserActionInt {
                 request.getSession(true).setAttribute("buses", buses);
                 request.getSession(true).setAttribute("seats", seatList);
                 request.getSession(true).setAttribute("cart", cart);
-                if ("admin@YSG.com".equalsIgnoreCase(user.getEmail())){
-                    return Action.LOGIN;
-                }else{
-                    return Action.SUCCESS;
-                }
+                return Action.SUCCESS;
+                
             }
         }
         request.getSession().setAttribute("error", true);

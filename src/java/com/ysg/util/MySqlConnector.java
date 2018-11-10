@@ -8,6 +8,7 @@ package com.ysg.util;
 import com.ysg.data.Account;
 import com.ysg.data.Bus;
 import com.ysg.data.Seat;
+import com.ysg.data.Ticket;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,6 +22,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 import com.ysg.exception.RepositoryException;
+import java.util.Date;
 
 
 /**
@@ -28,16 +30,18 @@ import com.ysg.exception.RepositoryException;
  * @author tochukwu
  */
 public class MySqlConnector {
-    private static final String INSERT_USER = "INSERT INTO userInfo (firstname, lastname, emailAddress, phoneNumber, password) VALUES (?,?,?,?,?)";
-    private static final String FETCH_EMAILS = "SELECT emailAddress FROM userInfo";
-    private static final String FETCH_USER = "SELECT * FROM userInfo WHERE emailAddress =\"%s\"";
-    private static final String INSERT_BUS = "INSERT INTO buses (route, type, capacity, available) VALUES (?,?,?,?)";
-    private static final String INSERT_SEAT = "INSERT INTO seats (seatID, busID, price, availability) VALUES (?,?,?,?)";
-    private static final String FETCH_BUSES = "SELECT * FROM buses";
+    private static final String INSERT_USER = "INSERT INTO users (username, first_name, last_name, email, phone, password) VALUES (?,?,?,?,?,?)";
+    private static final String FETCH_EMAILS = "SELECT email FROM users";
+    private static final String FETCH_USER = "SELECT * FROM users WHERE email =\"%s\"";
+    private static final String INSERT_BUS = "INSERT INTO Buses (type, capacity, available) VALUES (?,?,?)";
+    private static final String INSERT_SEAT = "INSERT INTO seats (seatID, busID, price, available, depature_time_id, route_id) VALUES (?,?,?,?,?,?)";
+    private static final String FETCH_BUSES = "SELECT * FROM Buses";
     private static final String FETCH_SEATS = "SELECT * FROM seats";
-    private static final String FETCH_BUS = "SELECT * FROM buses WHERE busID = %d";
+    private static final String FETCH_BUS = "SELECT * FROM Buses WHERE busID = %d";
+    private static final String INSERT_TICKETS = "INSERT INTO tickets () values ()";
+    private static final String INSERT_TIME = "INSERT INTO departure_time(date) value(?)";
     private static DataSource ds;
-    private static final String DS_NAME = "jdbc/sen_301DS";
+    private static final String DS_NAME = "jdbc/ysgDS";
     private static Context envCtx;
     
     static {
@@ -52,16 +56,17 @@ public class MySqlConnector {
         }
     }
     
-    public static void insertUser(String firstN, String lastN, String email, String phone, String pass) throws SQLException{
+    public static void insertUser(String username, String firstN, String lastN, String email, String phone, String pass) throws SQLException{
         Connection conn = null;
         try {
             conn = getConnection();
             PreparedStatement stmt = conn.prepareStatement(INSERT_USER);
-            stmt.setString(1, firstN);
-            stmt.setString(2, lastN);
-            stmt.setString(3, email);
-            stmt.setString(4, phone);
-            stmt.setString(5, pass); 
+            stmt.setString(2, firstN);
+            stmt.setString(3, lastN);
+            stmt.setString(4, email);
+            stmt.setString(5, phone);
+            stmt.setString(6, pass); 
+            stmt.setString(1, username);
             stmt.execute();
             closeStatement(stmt);
         } catch (SQLException ex) {
@@ -106,7 +111,7 @@ public class MySqlConnector {
             ResultSet resultSet = stmt.getResultSet();
             
             while (resultSet.next()){
-                emails.add(resultSet.getString("emailAddress"));
+                emails.add(resultSet.getString("email"));
             }
             closeStatement(stmt);
             return emails;
@@ -130,11 +135,13 @@ public class MySqlConnector {
             Account user = null;
             
             while (resultSet.next()){
-                String firstN = resultSet.getString("firstname");
-                String lastN = resultSet.getString("lastname");
+                String username = resultSet.getString("username");
+                String firstN = resultSet.getString("first_name");
+                String lastN = resultSet.getString("last_name");
                 String password = resultSet.getString("password");
-                String phone = resultSet.getString("phoneNumber");
-                user = new Account(firstN, lastN, email, password, phone);
+                String phone = resultSet.getString("phone");
+                String emailAddress = resultSet.getString("email");
+                user = new Account(username, firstN, lastN, emailAddress, password, phone);
             }
             closeStatement(stmt);
             return user;
@@ -147,17 +154,18 @@ public class MySqlConnector {
             closeConnection(conn);
         }
     }
-    public static void insertBus(String route, String type, int capacity, int seats) throws SQLException{
+    public static void insertBus(String type, int capacity, int seats) throws SQLException{
         Connection conn = null;
         try {
             conn = getConnection();
             PreparedStatement stmt = conn.prepareStatement(INSERT_BUS);
-            stmt.setString(1,route);
-            stmt.setString(2, type);
-            stmt.setInt(3, capacity);
-            stmt.setInt(4, seats);
+            stmt.setString(1, type);
+            stmt.setInt(2, capacity);
+            stmt.setInt(3, seats);
             stmt.execute();
             closeStatement(stmt);
+//            PreparedStatement stmt2 = conn.prepareStatement(INSERT_TRIP);
+            
         } catch (SQLException ex) {
             ex.printStackTrace();
             throw ex;
@@ -233,12 +241,11 @@ public class MySqlConnector {
             return list;
         }
         while (result.next()) {
-            int id = result.getInt("busID");
-            String route = result.getString("route");
+            int id = result.getInt("bus_id");
             String type = result.getString("type");
             int capacity  = result.getInt("capacity");
             int available = result.getInt("available");
-            Bus bus = new Bus(id, route, type, capacity, available);
+            Bus bus = new Bus(id, type, capacity, available);
             list.add(bus);
         }
         return list;
@@ -250,14 +257,51 @@ public class MySqlConnector {
             return list;
         }
         while (result.next()) {
-            int id = result.getInt("seatID");
-            Bus bus = getBus(result.getInt("busID"));
+            int id = result.getInt("seat_no");
+            Bus bus = getBus(result.getInt("bus_id"));
             int price  = result.getInt("price");
-            boolean availability = result.getBoolean("availability");
+            boolean availability = result.getBoolean("available");
             Seat seat = new Seat(id, bus, price, availability);
             list.add(seat);
         }
         return list;
+    }
+    
+      
+    public static void insertTickets(List<Ticket> tickets) throws SQLException{
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            PreparedStatement stmt = conn.prepareStatement(INSERT_TICKETS);
+            for (Ticket ticket:tickets){
+                stmt.execute();
+            }
+            
+            closeStatement(stmt);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw ex;
+        }
+        finally {
+            closeConnection(conn);
+        }
+    }
+    
+    public static void insertTime(Date date) throws SQLException{
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            PreparedStatement stmt = conn.prepareStatement(INSERT_TIME);
+            stmt.setDate(1, (java.sql.Date) date);
+            stmt.execute();
+            closeStatement(stmt);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw ex;
+        }
+        finally {
+            closeConnection(conn);
+        }
     }
     
     private static DataSource getDataSource(){
@@ -317,12 +361,11 @@ public class MySqlConnector {
             ResultSet resultSet = stmt.getResultSet();
             Bus bus = null;
             while (resultSet.next()){
-                int id = resultSet.getInt("busID");
-                String route = resultSet.getString("route");
+                int id = resultSet.getInt("bus_id");
                 String type = resultSet.getString("type");
                 int cap = resultSet.getInt("capacity");
                 int avail = resultSet.getInt("available");
-                bus = new Bus(id, route, type, cap, avail);
+                bus = new Bus(id, type, cap, avail);
             }
             closeStatement(stmt);
             return bus;

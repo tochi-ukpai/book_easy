@@ -15,6 +15,7 @@ public class Seat {
     private double price;
     private Boolean availability;
     
+    
     public Seat(int num, Bus car, double p, Boolean avail){
         seatNumber = num;
         bus = car;

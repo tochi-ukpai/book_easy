@@ -17,7 +17,7 @@
         <link rel="stylesheet" type = "text/css" href = "style.css"></link>
     </head>
     <body>
-        <s:if test="#attr.account != null && #attr.account.getEmail() == \"admin@YSG.com\"">
+        <s:if test="#attr.account != null && #attr.account.equalsIgnoreCase(\"admin\")">
             <div>
                 <a href="adminDashboard.jsp" class="right"><button>Dashboard</button></a>
                 <form action="logout" class="right">
@@ -29,8 +29,8 @@
                     <legend>Enter bus details</legend>
                     <label>Route:</label>
                     <select name="route" default="Choose Route">
-                        <option value="Lagos to Yola">Lagos to Yola</option>
-                        <option value="Yola to Lagos">Yola to Lagos</option>
+                        <option value=2>Lagos to Yola</option>
+                        <option value=1>Yola to Lagos</option>
                     </select>
                     <br/>
 
@@ -48,7 +48,7 @@
                 </form>
             </div>
         </s:if>
-        <s:if test="!#attr.account.getEmail().equalsIgnoreCase(\"admin@YSG.com\")">
+        <s:if test="!#attr.account.getEmail().equalsIgnoreCase(\"admin\")">
             <c:redirect url="dashboard.jsp"/>
         </s:if>
         <s:if test="#attr.account == null">
