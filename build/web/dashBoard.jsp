@@ -27,7 +27,7 @@
             <p>Last Name: <s:property value = "#attr.account.getLastName()"/></p>
             <p>Phone Number: <s:property value ="#attr.account.getPhone()"/></p>
             <a href="buses.jsp"><button>View Buses</button></a>
-            <a href="viewseats.action"><button>View Seats</button></a>
+            <a href="bookseats.action"><button>Book Seats</button></a>
         </s:if>
         <s:if test="#attr.account == null">
             <c:redirect url="signin.jsp"/>

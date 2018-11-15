@@ -17,6 +17,6 @@ public interface YsgUserActionInt extends Parameterizable, ServletRequestAware {
     
     public String registerUser() throws Exception;
     
-    public String viewSeats() throws Exception;
+    public String bookSeats() throws Exception;
     
 }

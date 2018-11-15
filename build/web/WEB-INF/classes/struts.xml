@@ -9,6 +9,9 @@
         <action name='admin'>
             <result type='redirect'>adminLogin.jsp</result>
         </action>
+        <action name = "assignBus" method = 'assignBus' class ='com.ysg.action.YsgAdminAction'>
+            <result type = 'redirect'>trips.jsp</result>
+        </action>
         <action name='adminLogin' method = 'login' class='com.ysg.action.YsgAdminAction'>
             <result type='redirect'>adminDashboard.jsp</result>
         </action>
@@ -25,7 +28,7 @@
             <result type = 'redirect'>signin.jsp</result>
             <result type = 'redirect' name = 'error'>signin.jsp</result>
         </action>     
-        <action name = 'viewseats' method = "viewSeats" class = 'com.ysg.action.YsgUserAction'>
+        <action name = 'bookseats' method = "bookSeats" class = 'com.ysg.action.YsgUserAction'>
             <result type = 'redirect'>seats.jsp</result>
         </action>
         

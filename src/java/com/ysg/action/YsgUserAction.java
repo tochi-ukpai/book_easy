@@ -33,7 +33,7 @@ public class YsgUserAction implements YsgUserActionInt {
     
     
     @Override
-    public String viewSeats() throws Exception {
+    public String bookSeats() throws Exception {
         this.buses = MySqlConnector.fetchBuses();
         this.seatList = MySqlConnector.fetchSeats();
         this.cart = new ShoppingCart();

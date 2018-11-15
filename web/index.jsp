@@ -16,6 +16,6 @@
     </head>
 
     <body>
-       <c:redirect url ="/viewseats.action"/>
+       <c:redirect url ="signin.jsp"/>
     </body>
 </html>

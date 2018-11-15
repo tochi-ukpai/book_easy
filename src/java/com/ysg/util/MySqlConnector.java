@@ -154,7 +154,7 @@ public class MySqlConnector {
             closeConnection(conn);
         }
     }
-    public static void insertBus(String type, int capacity, int seats) throws SQLException{
+    public static void insertBus(String type, int capacity, int seats, int route) throws SQLException{
         Connection conn = null;
         try {
             conn = getConnection();

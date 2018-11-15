@@ -66,7 +66,7 @@ public class YsgAdminAction implements YsgAdminActionInt {
         String type = request.getParameter("type");
         int capacity = parseInt(request.getParameter("capacity"));
         int price = parseInt(request.getParameter("price"));
-        MySqlConnector.insertBus(type, capacity, capacity);
+        MySqlConnector.insertBus(type, capacity, capacity, route);
         this.busList = MySqlConnector.fetchBuses();
         Bus newbus = busList.get(busList.size()-1);
         
@@ -76,6 +76,11 @@ public class YsgAdminAction implements YsgAdminActionInt {
         seatList = MySqlConnector.fetchSeats();
         request.getSession(true).setAttribute("seats", seatList);
         request.getSession(true).setAttribute("buses", busList);
+        return Action.SUCCESS;
+    }
+    
+    public String assignBus() throws Exception{
+        
         return Action.SUCCESS;
     }
 

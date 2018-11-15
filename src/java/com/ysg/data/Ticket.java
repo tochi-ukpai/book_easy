@@ -10,11 +10,21 @@ package com.ysg.data;
  * @author tochukwu
  */
 public class Ticket {
+    private int id;
     private String firstName, lastName, phoneNumber;
     private Seat ticketSeat;
     private Boolean options;
     
-    public Ticket(String firstN, String lastN, String number, Seat seat, Boolean opt){
+    public Ticket(int ID, String firstN, String lastN, String number, Seat seat, Boolean opt){
+        id = ID;
+        firstName = firstN;
+        lastName = lastN;
+        phoneNumber = number;
+        ticketSeat = seat;
+        options = opt;
+    }
+
+    public Ticket(String firstN, String lastN, String number, Seat seat, Boolean opt) {
         firstName = firstN;
         lastName = lastN;
         phoneNumber = number;

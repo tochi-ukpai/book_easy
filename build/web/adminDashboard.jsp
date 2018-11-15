@@ -29,6 +29,7 @@
                 <input type="submit" value="View Seats"/>
             </form>
             <a href="./addBus.jsp"><button class="right">Add New Bus</button></a>
+            <a href="./assignBus.jsp"><button class="right">Assign Bus</button></a>
         </s:if>
         <s:if test="#attr.account == null">
             <c:redirect url="admin"/>

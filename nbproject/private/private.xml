@@ -3,12 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/tochukwu/dev/YSGBookingApp/src/java/struts.xml</file>
             <file>file:/home/tochukwu/dev/YSGBookingApp/src/java/com/ysg/action/YsgAdminAction.java</file>
-            <file>file:/home/tochukwu/dev/YSGBookingApp/src/java/com/ysg/data/Seat.java</file>
             <file>file:/home/tochukwu/dev/YSGBookingApp/web/adminDashboard.jsp</file>
-            <file>file:/home/tochukwu/dev/YSGBookingApp/web/signup.jsp</file>
+            <file>file:/home/tochukwu/dev/YSGBookingApp/src/java/com/ysg/data/Trip.java</file>
             <file>file:/home/tochukwu/dev/YSGBookingApp/src/java/com/ysg/action/YsgUserAction.java</file>
+            <file>file:/home/tochukwu/dev/YSGBookingApp/src/java/struts.xml</file>
+            <file>file:/home/tochukwu/dev/YSGBookingApp/src/java/com/ysg/data/Ticket.java</file>
+            <file>file:/home/tochukwu/dev/YSGBookingApp/src/java/com/ysg/data/Seat.java</file>
+            <file>file:/home/tochukwu/dev/YSGBookingApp/web/signup.jsp</file>
+            <file>file:/home/tochukwu/dev/YSGBookingApp/web/addBus.jsp</file>
             <file>file:/home/tochukwu/dev/YSGBookingApp/src/java/com/ysg/util/MySqlConnector.java</file>
             <file>file:/home/tochukwu/dev/YSGBookingApp/web/adminLogin.jsp</file>
             <file>file:/home/tochukwu/dev/YSGBookingApp/src/java/com/ysg/data/Bus.java</file>
