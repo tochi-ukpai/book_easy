@@ -25,11 +25,31 @@
             <form action ="viewbuses" class="right">
                 <input type="submit" value="View Buses"/>
             </form>
-            <form action="viewseats" class="right">
+            <form action="bookseats" class="right">
                 <input type="submit" value="View Seats"/>
             </form>
             <a href="./addBus.jsp"><button class="right">Add New Bus</button></a>
             <a href="./assignBus.jsp"><button class="right">Assign Bus</button></a>
+            <table width = "100%">
+                <tr>
+                    <td>Trip ID</td>
+                    <td>Bus</td>
+                    <td>Route</td>
+                    <td>Departure Date</td>
+                    <td>Departure Time</td>
+                    <td>Price</td>
+                </tr>
+                <s:iterator value ="#attr.trips">
+                    <tr>
+                        <td><s:property value="getId()"/></td>
+                        <td><s:property value="getBus().getID()"/></td>
+                        <td><s:property value="getRoute()"/></td>
+                        <td><s:property value="getDepartureDateString()"/></td>
+                        <td><s:property value="getDepartureTime()"/></td>
+                        <td><s:property value="getPrice()"/></td>
+                    </tr>
+                </s:iterator>
+            </table>
         </s:if>
         <s:if test="#attr.account == null">
             <c:redirect url="admin"/>

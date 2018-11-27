@@ -16,6 +16,9 @@
         <title></title>
     </head>
     <body>
+        <s:if test = "#attr.account == \"admin\"">
+            <c:redirect url="./adminDashboard.jsp"></c:redirect>
+        </s:if>
         <form action="adminLogin" method="post">
             <legend>Enter administrative password</legend><br/>
             <input type="password" placeholder="Password" name="pass"/><br/>

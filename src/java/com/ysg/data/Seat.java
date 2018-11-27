@@ -11,15 +11,13 @@ package com.ysg.data;
  */
 public class Seat {
     private int seatNumber;
-    private Bus bus;
-    private double price;
+    private Trip trip;
     private Boolean availability;
     
     
-    public Seat(int num, Bus car, double p, Boolean avail){
+    public Seat(int num, Trip tp, Boolean avail){
         seatNumber = num;
-        bus = car;
-        price = p;
+        trip = tp;
         availability = avail;
     }
     
@@ -31,20 +29,12 @@ public class Seat {
         return seatNumber;
     }
     
-    public void setBus(Bus car){
-        bus = car;
+    public void setTrip(Trip tp){
+        trip = tp;
     }
     
-    public Bus getBus(){
-        return bus;
-    }
-    
-    public void setPrice(double p){
-        price = p;
-    }
-    
-    public double getPrice(){
-        return price;
+    public Trip getTrip(){
+        return trip;
     }
     
     public void setAvailability(Boolean avail){

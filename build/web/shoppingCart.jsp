@@ -24,6 +24,8 @@
             <table width ="100%">
                 <tr>
                     <td>Seat Number</td>
+                    <td>Departure Date</td>
+                    <td>Departure Time</td>
                     <td>Bus Number</td>
                     <td>Bus Type</td>
                     <td>Route</td>
@@ -33,26 +35,28 @@
                 <s:iterator value="#attr.cart.getItems()">
                     <tr>
                         <td><s:property value="getSeatNumber()"/></td>
-                        <td><s:property value="getBus().getID()"/></td>
-                        <td><s:property value="getBus().getRoute()"/></td>
-                        <td><s:property value="getBus().getType()"/></td>
-                        <td><s:property value="getPrice()"/></td>
+                        <td><s:property value="getTrip().getDepartureDateString()"/></td>
+                        <td><s:property value="getTrip().getDepartureTime()"/></td>
+                        <td><s:property value="getTrip().getBus().getID()"/></td>
+                        <td><s:property value="getTrip().getBus().getType()"/></td>
+                        <td><s:property value="getTrip().getRoute()"/></td>
+                        <td><s:property value="getTrip().getPrice()"/></td>
                         <td>
                             <form action="removeFromCart">
-                                <input type="hidden" value="<s:property value="getSeatNumber()"/>" name="seatID"/>
-                                <input type="hidden" value="<s:property value="getBus().getID()"/>" name="busID"/>
+                                <input type="hidden" value="<s:property value="getSeatNumber()"/>" name="seat_id"/>
+                                <input type="hidden" value="<s:property value="getTrip().getId()"/>" name="trip_id"/>
                                 <input type="submit" value="Remove from cart"/>
                             </form>
                         </td>
                     </tr>
                 </s:iterator>
-                    <tr>
-                        <td colspan="4">Grand Total</td>
-                        <td><s:property value="#attr.cart.getGrandTotal()"/></td>
-                        <td><a href="confirmation.jsp"><button>Proceed to Checkout</button></a></td>
-                    </tr>
-                   
+                <tr>
+                    <td colspan="6">Grand Total</td>
+                    <td><s:property value="#attr.cart.getGrandTotal()"/></td>
+                    <td><a href="confirmation.jsp"><button>Proceed to Checkout</button></a></td>
+                </tr>
             </table>
+       
         </s:if>
     </body>
 </html>

@@ -10,23 +10,22 @@
             <result type='redirect'>adminLogin.jsp</result>
         </action>
         <action name = "assignBus" method = 'assignBus' class ='com.ysg.action.YsgAdminAction'>
-            <result type = 'redirect'>trips.jsp</result>
+            <result type = 'redirect'>adminDashboard.jsp</result>
         </action>
         <action name='adminLogin' method = 'login' class='com.ysg.action.YsgAdminAction'>
             <result type='redirect'>adminDashboard.jsp</result>
         </action>
         <action name='register' method ='registerUser' class='com.ysg.action.YsgUserAction'>
-            <result type = "redirect">dashBoard.jsp</result>
+            <result type = "redirect">login.jsp</result>
         </action>
         <action name='login' method='signInUser' class='com.ysg.action.YsgUserAction'>
             <result type= 'redirect'>dashBoard.jsp</result>
-            <result name="error">signin.jsp</result>
-            <result name="login" type = 'redirect'>adminDashboard.jsp</result>
+            <result name="error">login.jsp</result>
         </action>
         
         <action name = 'logout' method = 'logOut' class = 'com.ysg.action.YsgUserAction'>
-            <result type = 'redirect'>signin.jsp</result>
-            <result type = 'redirect' name = 'error'>signin.jsp</result>
+            <result type = 'redirect'>login.jsp</result>
+            <result type = 'redirect' name = 'error'>login.jsp</result>
         </action>     
         <action name = 'bookseats' method = "bookSeats" class = 'com.ysg.action.YsgUserAction'>
             <result type = 'redirect'>seats.jsp</result>
@@ -46,6 +45,10 @@
         </action>
         <action name = 'addTickets' method="addTickets" class='com.ysg.action.YsgUserAction'>
             <result type='redirect'>payment.jsp</result>
+        </action>
+        
+        <action name = "getTrip" method = "getTrips" class = 'com.ysg.action.YsgUserAction'>
+            <result type = 'redirect'>seats.jsp</result>
         </action>
         
     </package>

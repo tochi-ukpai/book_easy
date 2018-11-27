@@ -20,18 +20,14 @@
         <table width = "100%">
             <tr>
                 <td>Bus ID</td>
-                <td>Route</td>
                 <td>Type</td>
                 <td>Capacity</td>
-                <td>Available seats</td>
             </tr>
             <s:iterator value="#attr.buses">
                 <tr>
                     <td><s:property value="getID()"/></td>
-                    <td><s:property value="getRoute()"/></td>
                     <td><s:property value="getType()"/></td>
                     <td><s:property value="getCapacity()"/></td>
-                    <td><s:property value="getAvailable()"/></td>
                 </tr>
             </s:iterator>
         </table>

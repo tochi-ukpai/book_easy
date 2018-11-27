@@ -49,7 +49,7 @@ public class ShoppingCart implements Serializable {
     public synchronized double getGrandTotal(){
         grandTotal = 0;
         items.forEach((cItem) -> {
-            grandTotal += cItem.getPrice();
+            grandTotal += cItem.getTrip().getPrice();
         });
         return to2Dec(grandTotal);
     }

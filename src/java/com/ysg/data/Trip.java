@@ -5,6 +5,8 @@
  */
 package com.ysg.data;
 
+import java.sql.Time;
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -14,17 +16,27 @@ import java.util.Date;
 public class Trip {
     private int id;
     private Bus bus;
-    private String route;
-    private Date departure_time;
+    private Route route;
+    private Departure departure_time;
+    private double price;
     
     public Trip(){
         
     }
-    public Trip(int ID, Bus car, String rout, Date time){
+    public Trip(int ID, Bus car, Route rout, Departure time, Double p){
         id = ID;
         bus = car;
         route = rout;
         departure_time = time;
+        price = p;
+    }
+    
+    public int getId(){
+        return id;
+    }
+    
+    public void setId(int Id){
+        id = Id;
     }
     
     public void setBus(Bus car){
@@ -35,28 +47,37 @@ public class Trip {
         return bus;
     }
     
-    public void setRoute(String rout){
+    public void setRoute(Route rout){
         route = rout;
     }
     
     public String getRoute(){
-        return route;
+        return route.getRoute();
+    }
+    public int getRouteID(){
+        return route.getID();
     }
     
-    public void setTime(Date time){
+    public void setDeparture(Departure time){
         departure_time = time;
     }
-    public Date getTime(){
-        return departure_time;
+    public Date getDepartureDate(){
+        return departure_time.getDate();
+    }
+    public Time getDepartureTime(){
+        return departure_time.getTime();
     }
     
-    public void setId(int ID){
-        id = ID;
+    public void setPrice(double p){
+        price = p;
     }
     
-    public int getId(){
-        return id;
+    public double getPrice(){
+        return price;
     }
-
+    
+    public String getDepartureDateString(){
+        return departure_time.getDate().toString();
+    }
     
 }

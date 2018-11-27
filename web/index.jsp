@@ -16,6 +16,6 @@
     </head>
 
     <body>
-       <c:redirect url ="signin.jsp"/>
+       <c:redirect url ="login.jsp"/>
     </body>
 </html>

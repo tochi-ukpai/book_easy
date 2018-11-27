@@ -27,11 +27,6 @@
             <div>
                 <form action="addbus" method="post">
                     <legend>Enter bus details</legend>
-                    <label>Route:</label>
-                    <select name="route" default="Choose Route">
-                        <option value=2>Lagos to Yola</option>
-                        <option value=1>Yola to Lagos</option>
-                    </select>
                     <br/>
 
                     <label>Type:</label>
@@ -42,8 +37,6 @@
                     <br/>
                     <label>Capacity:</label>
                     <input type="number" name ="capacity"/><br/>
-                    <label>Price per seat</label>
-                    <input type="number" name ="price"/><br/>
                     <input type="submit" value="Add"/>            
                 </form>
             </div>

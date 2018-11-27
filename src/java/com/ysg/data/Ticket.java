@@ -14,22 +14,25 @@ public class Ticket {
     private String firstName, lastName, phoneNumber;
     private Seat ticketSeat;
     private Boolean options;
+    private Account account;
     
-    public Ticket(int ID, String firstN, String lastN, String number, Seat seat, Boolean opt){
+    public Ticket(int ID, String firstN, String lastN, String number, Seat seat, Account user, Boolean opt){
         id = ID;
         firstName = firstN;
         lastName = lastN;
         phoneNumber = number;
         ticketSeat = seat;
         options = opt;
+        account = user;
     }
 
-    public Ticket(String firstN, String lastN, String number, Seat seat, Boolean opt) {
+    public Ticket(String firstN, String lastN, String number, Seat seat, Account user,  Boolean opt) {
         firstName = firstN;
         lastName = lastN;
         phoneNumber = number;
         ticketSeat = seat;
         options = opt;
+        account = user;
     }
     
     public void setName(String firstN, String lastN){
@@ -59,5 +62,13 @@ public class Ticket {
     
     public String getNumber(){
         return phoneNumber;
+    }
+    
+    public Account getUser(){
+        return account;
+    }
+    
+    public void setUser(Account user){
+        account = user;
     }
 }
