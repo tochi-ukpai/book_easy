@@ -25,11 +25,11 @@
             <form action ="viewbuses" class="right">
                 <input type="submit" value="View Buses"/>
             </form>
-            <form action="bookseats" class="right">
+<!--            <form action="bookseats" class="right">
                 <input type="submit" value="View Seats"/>
-            </form>
-            <a href="./addBus.jsp"><button class="right">Add New Bus</button></a>
-            <a href="./assignBus.jsp"><button class="right">Assign Bus</button></a>
+            </form>-->
+            <a href="./addBus.jsp"><button class="right">Add Bus</button></a>
+            <a href="./assignBus.jsp"><button class="right">Create Trip</button></a>
             <table width = "100%">
                 <tr>
                     <td>Trip ID</td>

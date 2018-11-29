@@ -13,7 +13,7 @@
             <result type = 'redirect'>adminDashboard.jsp</result>
         </action>
         <action name='adminLogin' method = 'login' class='com.ysg.action.YsgAdminAction'>
-            <result type='redirect'>adminDashboard.jsp</result>
+            <result type='redirect'>../adminDashboard.jsp</result>
         </action>
         <action name='register' method ='registerUser' class='com.ysg.action.YsgUserAction'>
             <result type = "redirect">login.html</result>
