@@ -16,6 +16,6 @@
     </head>
 
     <body>
-       <c:redirect url ="login.jsp"/>
+       <c:redirect url ="./html/cover page.html"/>
     </body>
 </html>

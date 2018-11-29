@@ -16,15 +16,15 @@
             <result type='redirect'>adminDashboard.jsp</result>
         </action>
         <action name='register' method ='registerUser' class='com.ysg.action.YsgUserAction'>
-            <result type = "redirect">login.jsp</result>
+            <result type = "redirect">login.html</result>
         </action>
         <action name='login' method='signInUser' class='com.ysg.action.YsgUserAction'>
-            <result type= 'redirect'>dashBoard.jsp</result>
+            <result type= 'redirect'>book.html</result>
             <result name="error">login.jsp</result>
         </action>
         
         <action name = 'logout' method = 'logOut' class = 'com.ysg.action.YsgUserAction'>
-            <result type = 'redirect'>login.jsp</result>
+            <result type = 'redirect'>./html/login.html</result>
             <result type = 'redirect' name = 'error'>login.jsp</result>
         </action>     
         <action name = 'bookseats' method = "bookSeats" class = 'com.ysg.action.YsgUserAction'>
