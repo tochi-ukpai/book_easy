@@ -22,6 +22,10 @@ import static java.lang.Integer.parseInt;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
+import me.iyanuadelekan.paystackjava.core.*;
+import javax.json.JsonObject;
+import org.json.JSONObject;
+
 /**
  *
  * @author tochukwu
@@ -36,8 +40,16 @@ public class YsgUserAction implements YsgUserActionInt {
     private ShoppingCart cart;
     private List<Route> routes;
     private List<Trip> trips;
+    private final Customers customers = new Customers();
+    private List<Ticket> user_tickets;
+    private List<Ticket> upcoming;
     
     
+    public String checkout() throws Exception {
+        String cart = request.getParameter("cart");
+        System.out.println(cart);
+        return Action.SUCCESS;
+    }
     @Override
     public String bookSeats() throws Exception {
         this.buses = MySqlConnector.fetchBuses();
@@ -83,11 +95,20 @@ public class YsgUserAction implements YsgUserActionInt {
                 this.buses = MySqlConnector.fetchBuses();
                 this.routes = MySqlConnector.fetchRoutes();
                 this.cart = new ShoppingCart();
+                this.user_tickets = MySqlConnector.fetchTickets(this.user);
+                Date date = new Date(System.currentTimeMillis());
+                for (Ticket ticket:user_tickets){
+                    if(ticket.getSeat().getTrip().getDepartureDate().after(date)){
+                        this.upcoming.add(ticket);
+                    }
+                }
                 request.getSession(true).setAttribute("account", user);
                 request.getSession(true).setAttribute("error", false);
                 request.getSession(true).setAttribute("buses", buses);
                 request.getSession(true).setAttribute("cart", cart);
-                request.getSession(true).setAttribute("routes", routes);
+                request.getSession(true).setAttribute("routes", this.routes);
+                request.getSession(true).setAttribute("user_tickets", this.user_tickets);
+                request.getSession(true).setAttribute("upcoming_tickets", this.upcoming);
                 return Action.SUCCESS;
                 
             }
@@ -119,7 +140,6 @@ public class YsgUserAction implements YsgUserActionInt {
         for (Seat seat: seatList){
             if (seat.getTrip().getId() == trip_id && seat.getSeatNumber() == seatID){
                 this.cart.add(seat);
-                this.seatList.remove(seat);
                 break;
             }
         }
@@ -138,7 +158,6 @@ public class YsgUserAction implements YsgUserActionInt {
         for (Seat seat: cart.getItems()){
             if (seat.getTrip().getId()== trip_id && seat.getSeatNumber() == seatID){
                 this.cart.remove(seat);
-                this.seatList.add(seat);
                 break;
             }
         }
@@ -166,15 +185,36 @@ public class YsgUserAction implements YsgUserActionInt {
         return Action.SUCCESS;
     }
     
+    public String deleteTicket() throws Exception{
+        this.user_tickets = (List<Ticket>) request.getSession().getAttribute("user_tickets");
+        Ticket ticket = null;
+        int ticket_id = parseInt(request.getParameter("ticket_id"));
+        return Action.SUCCESS;
+    }
+    
     public String getTrips() throws Exception{
+        this.routes = (List<Route>) request.getSession().getAttribute("routes");
         String date = request.getParameter("trip_date");
-        int route = parseInt(request.getParameter("route"));
+        String source = request.getParameter("source");
+        String destination = request.getParameter("destination");
+        String trip = source + " to " + destination;
+        int route = 0;
+        for (Route rout:routes){
+            if (rout.getRoute().equalsIgnoreCase(trip)){
+                route = rout.getID();
+            }
+        }
+        if (route <1){
+            return Action.ERROR;
+        }
         int year = parseInt(date.substring(0, 4))-1900;
         int month = parseInt(date.substring(5, 7))-1;
         int day = parseInt(date.substring(8, 10));
         Date trip_date = new Date(year, month, day);
         System.out.println("date1: "+ trip_date);
+        System.out.println("route1: "+ route);
         this.seatList = MySqlConnector.fetchSeats(trip_date, route);
+        
         System.out.println("seats1 : " + seatList.size());
         request.getSession(true).setAttribute("seats", this.seatList);
         return Action.SUCCESS;

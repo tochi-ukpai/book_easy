@@ -34,9 +34,6 @@
                         <option value="luxury">Luxury</option>
                         <option value="Mini Bus">Mini Bus</option>
                     </select>    
-                    <br/>
-                    <label>Capacity:</label>
-                    <input type="number" name ="capacity"/><br/>
                     <input type="submit" value="Add"/>            
                 </form>
             </div>

@@ -17,7 +17,7 @@
 			return this.data('seatCharts');
 		}
 		
-		var fn       = this,
+		var fn = this,
 			seats    = {},
 			seatIds  = [],
 			legend,

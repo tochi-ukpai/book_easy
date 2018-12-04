@@ -16,6 +16,7 @@ import com.ysg.util.MySqlConnector;
 import static java.lang.Integer.parseInt;
 import java.text.DateFormat;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.sql.Time;
 import java.util.HashMap;
 import java.util.List;
@@ -64,7 +65,12 @@ public class YsgAdminAction implements YsgAdminActionInt {
     @Override
     public String addBus() throws Exception {
         String type = request.getParameter("type");
-        int capacity = parseInt(request.getParameter("capacity"));
+        int capacity = 0;
+        if (type.equalsIgnoreCase("luxury")){
+            capacity = 49;
+        }else if(type.equalsIgnoreCase("mini bus")){
+            capacity = 18;
+        }
         MySqlConnector.insertBus(type, capacity);
         this.busList = MySqlConnector.fetchBuses();
         request.getSession(true).setAttribute("buses", busList);
@@ -100,6 +106,20 @@ public class YsgAdminAction implements YsgAdminActionInt {
             MySqlConnector.insertSeat(i, new_trip.getId(), true);
         }
         request.getSession(true).setAttribute("trips", trips);
+        return Action.SUCCESS;
+    }
+    
+    public String insertRoute() throws Exception{
+        String departure = request.getParameter("departure");
+        String arrival = request.getParameter("arrival");
+        String route = departure + " to " + arrival;
+        this.routes = MySqlConnector.fetchRoutes();
+        for (Route rout:routes){
+            if (rout.getRoute().equalsIgnoreCase(route)){
+                return Action.ERROR;
+            }
+        }
+        MySqlConnector.insertRoute(route);
         return Action.SUCCESS;
     }
     

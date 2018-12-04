@@ -1,0 +1,9 @@
+{
+    "API_KEYS": {
+        "KEY_IN_USE": "sk_test_ec0b876637ca01d77cfba5f9c9901db9ebf477fa",
+        "TEST_SECRET_KEY": "sk_test_ec0b876637ca01d77cfba5f9c9901db9ebf477fa",
+        "TEST_PUBLIC_KEY": "pk_test_fe079f055dba1783fc9c44c2b1fedf16a57fb9f8",
+        "LIVE_SECRET_KEY": "sk_live_xxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "LIVE_PUBLIC_KEY": "pk_live_xxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    }
+}

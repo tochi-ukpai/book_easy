@@ -39,11 +39,13 @@ public class MySqlConnector {
     private static final String INSERT_SEAT = "INSERT INTO seats (seat_no, trip_id, available) VALUES (?,?,?)";
     private static final String INSERT_TIME = "INSERT INTO departure_time(date, time) value(?, ?)";
     private static final String INSERT_TRIP = "INSERT INTO trips(bus_id, route_id, departure_id, price) value(?, ?, ?, ?)";
-    private static final String INSERT_TICKETS = "INSERT INTO tickets () values ()";
+    private static final String INSERT_TICKETS = "INSERT INTO tickets (passenger_name, passenger_phone, user, seat_no, trip_id, options) values (?,?,?,?,?,?)";
+    private static final String INSERT_ROUTE = "INSERT INTO route(route) VALUE (?)";
     private static final String FETCH_EMAILS = "SELECT email FROM users";
-    private static final String FETCH_USER = "SELECT * FROM users WHERE email =\"%s\"";
+    private static final String FETCH_USER = "SELECT * FROM users WHERE email =\"%s\" or username = \"%s\" ";
     private static final String FETCH_BUSES = "SELECT * FROM buses";
     private static final String FETCH_SEATS = "SELECT * FROM seats where available = 1 and trip_id = %d";
+    private static final String FETCH_SEAT = "SELECT * FROM seats WHERE seat_no = ? AND trip_id = ?";
     private static final String FETCH_BUS = "SELECT * FROM buses WHERE bus_id = %d";
     private static final String FETCH_ROUTES = "SELECT * FROM route";
     private static final String FETCH_TIME = "SELECT * FROM departure_time WHERE date = ? and time = ?";
@@ -51,7 +53,8 @@ public class MySqlConnector {
     private static final String FETCH_TRIPS = "SELECT * FROM trips";
     private static final String FETCH_TRIP = "SELECT * FROM trips where trip_id = %d";
     private static final String FETCH_ROUTE = "SELECT * FROM route WHERE route_id = %d";
-    static final String UPDATE_SEAT = "UPDATE available  and trip_id = %d";
+    private static final String FETCH_TICKETS = "SELECT * FROM tickets WHERE user = \"%s\"";
+    static final String UPDATE_SEAT = "UPDATE seats SET available = ? WHERE seat_no = ? and trip_id = ?";
     private static DataSource ds;
     private static final String DS_NAME = "jdbc/ysgDS";
     private static Context envCtx;
@@ -68,6 +71,22 @@ public class MySqlConnector {
         }
     }
     
+    public static void insertRoute(String route) throws SQLException{
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            PreparedStatement stmt = conn.prepareStatement(INSERT_ROUTE);
+            stmt.setString(1, route);
+            stmt.execute();
+            closeStatement(stmt);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw ex;
+        }
+        finally {
+            closeConnection(conn);
+        }
+    }
     private static void insertDeparture(Date date, Time time) throws SQLException{
         Connection conn = null;
         try {
@@ -75,6 +94,25 @@ public class MySqlConnector {
             PreparedStatement stmt = conn.prepareStatement(INSERT_TIME);
             stmt.setDate(1, (java.sql.Date) date);
             stmt.setTime(2, (java.sql.Time) time);
+            stmt.execute();
+            closeStatement(stmt);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw ex;
+        }
+        finally {
+            closeConnection(conn);
+        }
+    }
+    
+    private static void updateSeat(Seat seat) throws SQLException{
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            PreparedStatement stmt = conn.prepareStatement(UPDATE_SEAT);
+            stmt.setBoolean(1, !seat.getAvailability());
+            stmt.setInt(2, seat.getSeatNumber());
+            stmt.setInt(3, seat.getTrip().getId());
             stmt.execute();
             closeStatement(stmt);
         } catch (SQLException ex) {
@@ -166,7 +204,7 @@ public class MySqlConnector {
         try {
             conn = getConnection();
             Statement stmt = conn.createStatement();
-            stmt.execute(String.format(FETCH_USER, email));
+            stmt.execute(String.format(FETCH_USER, email, email));
             ResultSet resultSet = stmt.getResultSet();
             String password = null;
             while (resultSet.next()){
@@ -214,7 +252,7 @@ public class MySqlConnector {
         try {
             conn = getConnection();
             Statement stmt = conn.createStatement();
-            stmt.execute(String.format(FETCH_USER, email));
+            stmt.execute(String.format(FETCH_USER, email, email));
             ResultSet resultSet = stmt.getResultSet();
             Account user = null;
             
@@ -309,6 +347,34 @@ public class MySqlConnector {
             stmt.execute();
             closeStatement(stmt);
         } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw ex;
+        }
+        finally {
+            closeConnection(conn);
+        }
+     }
+     
+     public static Seat fetchSeat(int seat_no, int trip_id) throws SQLException {
+         Connection conn = null;
+        try {
+            conn = getConnection();
+           PreparedStatement stmt = conn.prepareStatement(FETCH_SEAT);
+            stmt.setInt(1, seat_no);
+            stmt.setInt(2, trip_id);
+            stmt.execute();
+            ResultSet result = stmt.getResultSet();
+            Seat seat = null;
+            while (result.next()) {
+                int id = result.getInt("seat_no");
+                Trip trip = fetchTrip(result.getInt("trip_id"));
+                boolean availability = result.getBoolean("available");
+                seat = new Seat(id, trip, availability); 
+            }
+            closeStatement(stmt);
+            return seat;
+        }
+        catch (SQLException ex) {
             ex.printStackTrace();
             throw ex;
         }
@@ -427,6 +493,7 @@ public class MySqlConnector {
         }
         return list;
     }
+      
     
       
     public static void insertTickets(List<Ticket> tickets) throws SQLException{
@@ -435,6 +502,13 @@ public class MySqlConnector {
             conn = getConnection();
             PreparedStatement stmt = conn.prepareStatement(INSERT_TICKETS);
             for (Ticket ticket:tickets){
+                stmt.setString(1, ticket.getName());
+                stmt.setString(2, ticket.getNumber());
+                stmt.setString(3, ticket.getUser().getUsername());
+                stmt.setInt(4, ticket.getSeat().getSeatNumber());
+                stmt.setInt(5, ticket.getSeat().getTrip().getId());
+                stmt.setBoolean(6, ticket.getOptions());
+                updateSeat(ticket.getSeat());
                 stmt.execute();
             }
             
@@ -447,6 +521,47 @@ public class MySqlConnector {
             closeConnection(conn);
         }
     }
+    
+    public static List<Ticket> fetchTickets(Account user) throws SQLException {
+         Connection conn = null;
+        try {
+            conn = getConnection();
+            Statement stmt = conn.createStatement();
+           
+            stmt.execute(String.format(FETCH_TICKETS, user.getUsername()));
+            ResultSet resultSet = stmt.getResultSet();
+            List<Ticket> result = marshallTickets(resultSet);
+            closeStatement(stmt);
+            return result;
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+            throw ex;
+        }
+        finally {
+            closeConnection(conn);
+        }
+    }
+    
+    private static List<Ticket> marshallTickets(ResultSet result) throws SQLException{
+        List<Ticket> list = new ArrayList<>();
+        if (result == null) {
+            return list;
+        }
+        while (result.next()) {
+            int id = result.getInt("ticket_id");
+            String passenger = result.getString("passenger_name");
+            String passenger_phone = result.getString("passenger_phone");
+            String names[] = passenger.split(" ");
+            Seat seat = fetchSeat(result.getInt("seat_no"),result.getInt("trip_id"));
+            Account user = getUser(result.getString("user"));
+            Boolean option = result.getBoolean("option");
+            Ticket ticket = new Ticket(id, names[0], names[1], passenger_phone, seat, user, option);
+            list.add(ticket);
+        }
+        return list;
+    }
+    
 
     private static Bus getBus(int aInt) throws SQLException {
         Connection conn = null;

@@ -6,36 +6,39 @@
     <include file="struts-default.xml"/>
     <!-- Configuration for the default package. -->
     <package name="YSG" extends="struts-default">
+        <action name="booktrip">
+            <result type='redirect'>../../html/book.jsp</result>
+        </action>
         <action name='admin'>
             <result type='redirect'>adminLogin.jsp</result>
         </action>
         <action name = "assignBus" method = 'assignBus' class ='com.ysg.action.YsgAdminAction'>
-            <result type = 'redirect'>adminDashboard.jsp</result>
+            <result type = 'redirect'>profile.jsp</result>
         </action>
         <action name='adminLogin' method = 'login' class='com.ysg.action.YsgAdminAction'>
-            <result type='redirect'>../adminDashboard.jsp</result>
+            <result type='redirect'>../admin/html/profile.jsp</result>
         </action>
         <action name='register' method ='registerUser' class='com.ysg.action.YsgUserAction'>
             <result type = "redirect">login.html</result>
         </action>
         <action name='login' method='signInUser' class='com.ysg.action.YsgUserAction'>
-            <result type= 'redirect'>book.html</result>
+            <result type= 'redirect'>../admin/user/userprofile.jsp</result>
             <result name="error">login.jsp</result>
         </action>
         
         <action name = 'logout' method = 'logOut' class = 'com.ysg.action.YsgUserAction'>
-            <result type = 'redirect'>./html/login.html</result>
-            <result type = 'redirect' name = 'error'>login.jsp</result>
+            <result type = 'redirect'>../../html/login.jsp</result>
+            <result type = 'redirect' name = 'error'>../../html/login.jsp</result>
         </action>     
         <action name = 'bookseats' method = "bookSeats" class = 'com.ysg.action.YsgUserAction'>
-            <result type = 'redirect'>seats.jsp</result>
+            <result type = 'redirect'>./seats.jsp</result>
         </action>
         
         <action name = 'viewbuses' method = "viewBuses" class = 'com.ysg.action.YsgAdminAction'>
             <result type = 'redirect'>busesAdmin.jsp</result>
         </action>
         <action name = 'addbus' method = "addBus" class = 'com.ysg.action.YsgAdminAction'>
-            <result type = 'redirect'>busesAdmin.jsp</result>
+            <result type = 'redirect'>viewbuses.jsp</result>
         </action>
         <action name = 'addToCart' method = "addToCart" class = 'com.ysg.action.YsgUserAction'>
             <result type = 'redirect'>seats.jsp</result>
@@ -44,11 +47,19 @@
             <result type = 'redirect'>shoppingCart.jsp</result>
         </action>
         <action name = 'addTickets' method="addTickets" class='com.ysg.action.YsgUserAction'>
-            <result type='redirect'>payment.jsp</result>
+            <result type='redirect'>./html/confirmation.html</result>
         </action>
         
         <action name = "getTrip" method = "getTrips" class = 'com.ysg.action.YsgUserAction'>
-            <result type = 'redirect'>seats.jsp</result>
+            <result type = 'redirect'>../seats_layout.jsp</result>
+        </action>
+        
+        <action name = "checkout" method = "checkout" class = 'com.ysg.action.YsgUserAction'>
+            <result type = 'redirect'>./admin/user/checkout.jsp</result>
+        </action>
+        
+        <action name = "addRoute" method= "insertRoute" class = 'com.ysg.action.YsgAdminAction'>
+            <result type='redirect'>profile.jsp</result>
         </action>
         
     </package>
